@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.text.NumberFormat;
 import java.util.Scanner;
 
@@ -14,8 +15,19 @@ public class Mortgage {
 
         double answer=calculate_mortgage(principal,period,interest);
         NumberFormat currency= NumberFormat.getCurrencyInstance();
+        System.out.println();
+        System.out.println("MORTGAGE");
+        System.out.println("----------");
         String payment= currency.format(Math.round(answer));
-        System.out.println("Mortgage payment is  "+payment);
+        System.out.println("Monthly payment is  "+payment);
+
+        System.out.println();
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+        for (int i=1; i <= period*MONTHS; i++){
+            double balance=calcluteBalance(principal,period,interest,i);
+            System.out.println("Payment "+i+" = "+NumberFormat.getCurrencyInstance().format(balance));
+        }
 
 
     }
@@ -34,6 +46,14 @@ public class Mortgage {
         }
         return value;
     }
+    public static double calcluteBalance(int principal,int period,double interest,int Number_paymentMade){
+        double Monthly_interest = interest / 100 / MONTHS;
+        double totalpayments = period * MONTHS;
+        double balance= principal*(Math.pow(1+Monthly_interest,(totalpayments))-Math.pow(1+Monthly_interest,Number_paymentMade))/
+                (Math.pow(1+Monthly_interest,totalpayments)-1);
+        return balance;
+    }
+
     public static double  calculate_mortgage(int principal,int period,double interest){
         double Monthly_interest = interest / 100 / MONTHS;
         double rate_plus_one = Math.pow((Monthly_interest + 1), (period * MONTHS));
