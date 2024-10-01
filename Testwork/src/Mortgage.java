@@ -21,16 +21,21 @@ public class Mortgage {
         String payment= currency.format(Math.round(answer));
         System.out.println("Monthly payment is  "+payment);
 
-        System.out.println();
-        System.out.println("PAYMENT SCHEDULE");
-        System.out.println("----------------");
-        for (int i=1; i <= period*MONTHS; i++){
-            double balance=calcluteBalance(principal,period,interest,i);
-            System.out.println("Payment "+i+" = "+NumberFormat.getCurrencyInstance().format(balance));
-        }
+        Printpaymentschedule(principal, interest, period);
 
 
     }
+
+    private static void Printpaymentschedule(int principal, double interest, int period) {
+        System.out.println();
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+        for (int i = 1; i <= period *MONTHS; i++){
+            double balance=calcluteBalance(principal, period, interest,i);
+            System.out.println("Payment "+i+" = "+NumberFormat.getCurrencyInstance().format(balance));
+        }
+    }
+
     public static double ReadNumber(String prompt,double min,double max){
         Scanner scanner=new Scanner(System.in);
         double value;
